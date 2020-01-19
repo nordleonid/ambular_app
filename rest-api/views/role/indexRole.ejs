@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Список рольей</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <h1>Список ролей</h1>
+    <p><a href="/api/user/create">Добавить пользователя</a></p>
+    <p><a href="/">Список</a></p>
+    <p><a href="/api/role/create/">Добавить роль</a></p>
+    <table>
+      <tr>
+        <th>id</th>
+        <th>Role</th>
+      </tr>
+      <% roles.forEach((role, index) => { %>
+      <tr>
+        <td><%= role.id %></td>
+        <td><%= role.name %></td>
+        <td>
+          <a href="/api/role/update/<%= role.id %>">Edit</a>|
+          <form name="deleteForm" onSubmit="return deleteData(id.value)" style="display:inline;">
+            <input type="hidden" name="id" value="<%= role.id %>" />
+            <input type="submit" value="Delete" />
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+
+    <script>
+      function deleteData(id) {
+        let request = new XMLHttpRequest();
+        request.open("DELETE", "/api/role/" + id, true);
+        request.addEventListener("load", function() {
+          window.open("/api/role/list/", "_self");
+        });
+        request.send();
+      }
+    </script>
+  </body>
+  <html></html>
+</html>

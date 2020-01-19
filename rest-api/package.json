@@ -1,0 +1,24 @@
+{
+  "name": "rest-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "@angular/cli": "^8.3.22",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "^3.0.1",
+    "express": "^4.16.4",
+    "handlebars": "^4.7.1",
+    "hbs": "^4.0.6",
+    "morgan": "~1.9.1",
+    "mysql": "^2.17.1",
+    "mysql2": "^2.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1"
+  }
+}

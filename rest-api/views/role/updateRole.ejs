@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление пользователя</title>
+    <meta charset="utf-8" />
+    <style>.field{width:180px;}</style>
+</head>
+<body>
+    <h1>Добавление пользователя</h1>
+    <form name="updateRoleForm">
+        <input type="hidden" name="id" value="<%= role.id %>" />
+        <label>Права доступа</label><br>
+        <input name="name" value="<%= role.name %>" /><br><br><br><br>
+        <br><br>
+        <input  type="submit" id="submit" value="Отправить" /><br><br><br>
+    </form>
+    <br><br><br>
+    <a href="/">К списку пользователей</a><br>
+    <a href="/api/role/list/">К списку ролей</a>
+    <script>
+        document.getElementById("submit").addEventListener("click", (e) => {
+            e.preventDefault();
+            // получаем данные формы
+            
+            let updateRoleForm = document.forms["updateRoleForm"];
+            let id = updateRoleForm.elements["id"].value;
+            let name = updateRoleForm.elements["name"].value;
+            console.log(id, name);
+            // сериализуем данные в json
+            let updateRole = JSON.stringify({name: name, id: id});
+            let request = new XMLHttpRequest();
+            // посылаем запрос на адрес "/api/role"
+            request.open("PUT", "/api/role/" + id, true);   
+            request.setRequestHeader('Content-type','application/json; charset=utf-8');
+            request.addEventListener("load", function () {
+                window.open("/api/role/list/", "_self");
+            });
+            request.send(updateRole);
+        });
+    </script>
+</body>
+<html>

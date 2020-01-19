@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление пользователя</title>
+    <meta charset="utf-8" />
+    <style>.field{width:180px;}</style>
+</head>
+<body>
+    <h1>Добавление пользователя</h1>
+    <form name="createForm">
+        <label>Права доступа</label><br>
+        <input type="text" name="name" /><br><br>
+        <br><br>
+        <input  type="submit" id="submit" value="Отправить" />
+    </form><br><br><br><br><br><br>
+    <a href="/">К списку пользователей</a>
+    <script>
+        document.getElementById("submit").addEventListener("click", (e) => {
+            e.preventDefault();
+            // получаем данные формы
+            let createForm = document.forms["createForm"];
+            let name = createForm.elements["name"].value;
+            // сериализуем данные в json
+            let create = JSON.stringify({name: name});
+            let request = new XMLHttpRequest();
+            // посылаем запрос на адрес "/api/create"
+            request.open("POST", "/api/role", true);   
+            request.setRequestHeader("Content-Type", "application/json");
+            request.addEventListener("load", function () {
+                window.open("/", "_self");
+            });
+            request.send(create);
+            
+        });
+    </script>
+</body>
+<html>

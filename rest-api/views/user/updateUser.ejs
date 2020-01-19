@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление пользователя</title>
+    <meta charset="utf-8" />
+    <style>.field{width:180px;}</style>
+</head>
+<body>
+    <h1>Добавление пользователя</h1>
+    <form name="updateUserForm">
+        <input type="hidden" name="id" value="<%= user.id %>" />
+        <label>Имя</label><br>
+        <input name="name" value="<%= user.name %>" /><br><br><br><br>
+        <label>Права доступа</label><br>
+        <p><select name="access">
+            <% roles.forEach((role, updateUser) => { %>
+                <% if (user.access_id == role.id) { %>
+                    <option value="<%= role.id %>"selected="selected"><%= role.name %></option>
+                <% } else { %>
+                    <option value="<%= role.id %>"><%= role.name %></option>
+                <% } %>
+            <% }) %>
+        </select></p><br><br>
+        <input  type="submit" id="submit" value="Отправить" /><br><br><br>
+    </form>
+    <br><br><br>
+    <a href="/">К списку пользователей</a>
+    <script>
+        document.getElementById("submit").addEventListener("click", (e) => {
+            e.preventDefault();
+            // получаем данные формы
+            
+            let updateUserForm = document.forms["updateUserForm"];
+            let id = updateUserForm.elements["id"].value;
+            let name = updateUserForm.elements["name"].value;
+            let access = updateUserForm.elements["access"].value;
+            // сериализуем данные в json
+            let updateUser = JSON.stringify({name: name, access: access, id: id});
+            let request = new XMLHttpRequest();
+            // посылаем запрос на адрес "/api/updateUser"
+            request.open("PUT", "/api/user/" + id, true);   
+            request.setRequestHeader('Content-type','application/json; charset=utf-8');
+            request.addEventListener("load", function () {
+                window.open("/", "_self");
+            });
+            request.send(updateUser);
+            
+        });
+    </script>
+</body>
+<html>
